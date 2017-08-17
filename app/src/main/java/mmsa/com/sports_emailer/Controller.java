@@ -45,13 +45,26 @@ public class Controller {
         try {
             Game game = new Game();
             Team home = new Team();
+            Team away = new Team();
+
             Object g = iterateBoxscore(gameList.get(index), "game");
+
             Object homeObj = iterateBoxscore(g,"home");
-            Object name = iterateBoxscore(homeObj,"name");
-            Object market = iterateBoxscore(homeObj,"market");
-            home.setName(name.toString());
-            home.setMarket(market.toString());
+            Object homeName = iterateBoxscore(homeObj,"name");
+            Object homeMarket = iterateBoxscore(homeObj,"market");
+
+            Object awayObj = iterateBoxscore(g,"away");
+            Object awayName = iterateBoxscore(awayObj,"name");
+            Object awayMarket = iterateBoxscore(awayObj,"market");
+
+            home.setName(homeName.toString());
+            home.setMarket(homeMarket.toString());
+
+            away.setName(awayName.toString());
+            away.setMarket(awayMarket.toString());
+
             game.setHome(home);
+            game.setAway(away);
             return game;
         }catch(Exception e){
             throw new RuntimeException(e);
