@@ -2,6 +2,7 @@ package mmsa.com.sports_emailer;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.internal.ObjectConstructor;
+import com.mmsa.model.BaseballGame;
 import com.mmsa.model.Game;
 import com.mmsa.model.Team;
 
@@ -41,27 +42,25 @@ public class Controller {
         }
     }
 
-    public static Game getGameFromList(List<JSONObject> gameList, int index){
+    public static Game populateGameFromList(List<JSONObject> gameList, int index){
         try {
-            Game game = new Game();
+            Game game = new BaseballGame();
             Team home = new Team();
             Team away = new Team();
 
             Object g = iterateBoxscore(gameList.get(index), "game");
-
             Object homeObj = iterateBoxscore(g,"home");
-            Object homeName = iterateBoxscore(homeObj,"name");
-            Object homeMarket = iterateBoxscore(homeObj,"market");
-
             Object awayObj = iterateBoxscore(g,"away");
-            Object awayName = iterateBoxscore(awayObj,"name");
-            Object awayMarket = iterateBoxscore(awayObj,"market");
 
-            home.setName(homeName.toString());
-            home.setMarket(homeMarket.toString());
+            home.setName(iterateBoxscore(homeObj,"name").toString());
+            home.setMarket(iterateBoxscore(homeObj,"market").toString());
+            home.setRuns(iterateBoxscore(homeObj,"runs").toString());
+            home.setHits(iterateBoxscore(homeObj,"hits").toString());
 
-            away.setName(awayName.toString());
-            away.setMarket(awayMarket.toString());
+            away.setName(iterateBoxscore(awayObj,"name").toString());
+            away.setMarket(iterateBoxscore(awayObj,"market").toString());
+            away.setRuns(iterateBoxscore(awayObj,"runs").toString());
+            away.setHits(iterateBoxscore(awayObj,"hits").toString());
 
             game.setHome(home);
             game.setAway(away);
