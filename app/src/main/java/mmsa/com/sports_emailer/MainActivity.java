@@ -7,6 +7,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mmsa.controller.BoxscoreController;
+import com.mmsa.controller.URLMapper;
+import com.mmsa.model.BaseballGame;
+import com.mmsa.model.BaseballTeam;
 import com.mmsa.model.Game;
 
 import org.json.JSONObject;
@@ -24,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    BoxscoreController bc = new BoxscoreController("mlb-t6","3xbzsfssc3e275uy9r33pvm4");
-                    boxscore = bc.getBoxScores(bc.getBoxscoreURL());
+                    boxscore = BoxscoreController.getBoxScores(URLMapper.getGameURL("MLB"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -53,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView txt1=new TextView(this);
                 txt1.setLayoutParams(params1);
-                txt1.setText("| "+game.getAway().getMarket()+" "+game.getAway().getName()+"| "+game.getAway().getRuns()+" |");
+                txt1.setText("| "+game.getAway().getMarket()+" "+game.getAway().getName()+"| "+ ((BaseballTeam)game.getAway()).getRuns()+" |");
                 row.addView(txt1);
 
                 TextView txt2=new TextView(this);
                 txt2.setLayoutParams(params1);
-                txt2.setText("| "+game.getHome().getMarket()+" "+game.getHome().getName()+"| "+game.getHome().getRuns()+" |");
+                txt2.setText("| "+game.getHome().getMarket()+" "+game.getHome().getName()+"| "+((BaseballTeam)game.getHome()).getRuns()+" |");
                 row.addView(txt2);
 
                 row.setLayoutParams(params2);
