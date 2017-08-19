@@ -50,16 +50,22 @@ public class Controller {
             Team away = new BaseballTeam();
 
             Object g = iterateBoxscore(gameList.get(index), "game");
+            game.setStatus(iterateBoxscore(g,"status").toString());
             Object homeObj = iterateBoxscore(g,"home");
             Object awayObj = iterateBoxscore(g,"away");
 
             home.setName(iterateBoxscore(homeObj,"name").toString());
             home.setMarket(iterateBoxscore(homeObj,"market").toString());
+            home.setWins(iterateBoxscore(homeObj,"win").toString());
+            home.setLosses(iterateBoxscore(homeObj,"loss").toString());
             ((BaseballTeam)home).setRuns(iterateBoxscore(homeObj,"runs").toString());
             ((BaseballTeam)home).setHits(iterateBoxscore(homeObj,"hits").toString());
 
             away.setName(iterateBoxscore(awayObj,"name").toString());
             away.setMarket(iterateBoxscore(awayObj,"market").toString());
+            away.setWins(iterateBoxscore(awayObj,"win").toString());
+            away.setLosses(iterateBoxscore(awayObj,"loss").toString());
+
             ((BaseballTeam)away).setRuns(iterateBoxscore(awayObj,"runs").toString());
             ((BaseballTeam)away).setHits(iterateBoxscore(awayObj,"hits").toString());
 
@@ -69,5 +75,9 @@ public class Controller {
         }catch(Exception e){
             throw new RuntimeException(e);
         }
+    }
+
+    public static Object getBaseballBoxTable(){
+        return null;
     }
 }

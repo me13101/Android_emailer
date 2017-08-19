@@ -1,5 +1,6 @@
 package mmsa.com.sports_emailer;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TableLayout;
@@ -51,21 +52,42 @@ public class MainActivity extends AppCompatActivity {
             for(int i = 0; i < ((List<JSONObject>)daysGames).size();i++){
                 Game game = Controller.populateGameFromList((List<JSONObject>)daysGames, i);
 
-                TableRow row=new TableRow(this);
+                TableRow awayRow = new TableRow(this);
+                TableRow homeRow = new TableRow(this);
+                TableRow seperator = new TableRow(this);
 
-                TextView txt1=new TextView(this);
-                txt1.setLayoutParams(params1);
-                txt1.setText("| "+game.getAway().getMarket()+" "+game.getAway().getName()+"| "+ ((BaseballTeam)game.getAway()).getRuns()+" |");
-                row.addView(txt1);
+                homeRow.setBackgroundColor(Color.parseColor("#E8EAF6"));
+                awayRow.setBackgroundColor(Color.parseColor("#E8EAF6"));
+                seperator.setBackgroundColor(Color.parseColor("#CFD8DC"));
 
-                TextView txt2=new TextView(this);
-                txt2.setLayoutParams(params1);
-                txt2.setText("| "+game.getHome().getMarket()+" "+game.getHome().getName()+"| "+((BaseballTeam)game.getHome()).getRuns()+" |");
-                row.addView(txt2);
+                TextView txtSep=new TextView(this);
+                txtSep.setLayoutParams(params1);
+                txtSep.setText(game.getStatus());
+                seperator.addView(txtSep);
 
-                row.setLayoutParams(params2);
-                tbl.addView(row);
+                TextView awayNameCell=new TextView(this);
+                awayNameCell.setLayoutParams(params1);
+                awayNameCell.setText("|"+game.getAway().getMarket()+" "+game.getAway().getName()+"|");
+                awayRow.addView(awayNameCell);
 
+                TextView awayScoreCell=new TextView(this);
+                awayScoreCell.setLayoutParams(params1);
+                awayScoreCell.setText(((BaseballTeam)game.getAway()).getRuns()+"|");
+                awayRow.addView(awayScoreCell);
+
+                TextView homeNameCell=new TextView(this);
+                homeNameCell.setLayoutParams(params1);
+                homeNameCell.setText(game.getHome().getMarket()+" "+game.getHome().getName()+"|");
+                homeRow.addView(homeNameCell);
+
+                TextView homeScoreCell=new TextView(this);
+                homeScoreCell.setLayoutParams(params1);
+                homeScoreCell.setText(((BaseballTeam)game.getHome()).getRuns()+"|");
+                homeRow.addView(homeScoreCell);
+
+                tbl.addView(awayRow);
+                tbl.addView(homeRow);
+                tbl.addView(seperator);
             }
         }catch(Exception e){
             throw new RuntimeException(e);
