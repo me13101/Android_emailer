@@ -58,8 +58,10 @@ public class Controller {
             home.setMarket(iterateBoxscore(homeObj,"market").toString());
             home.setWins(iterateBoxscore(homeObj,"win").toString());
             home.setLosses(iterateBoxscore(homeObj,"loss").toString());
+
             ((BaseballTeam)home).setRuns(iterateBoxscore(homeObj,"runs").toString());
             ((BaseballTeam)home).setHits(iterateBoxscore(homeObj,"hits").toString());
+            ((BaseballTeam)home).setErrors(iterateBoxscore(homeObj,"errors").toString());
 
             away.setName(iterateBoxscore(awayObj,"name").toString());
             away.setMarket(iterateBoxscore(awayObj,"market").toString());
@@ -68,6 +70,7 @@ public class Controller {
 
             ((BaseballTeam)away).setRuns(iterateBoxscore(awayObj,"runs").toString());
             ((BaseballTeam)away).setHits(iterateBoxscore(awayObj,"hits").toString());
+            ((BaseballTeam)away).setErrors(iterateBoxscore(awayObj,"errors").toString());
 
             game.setHome(home);
             game.setAway(away);
