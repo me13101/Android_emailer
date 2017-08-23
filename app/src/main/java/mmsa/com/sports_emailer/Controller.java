@@ -51,6 +51,11 @@ public class Controller {
 
             Object g = iterateBoxscore(gameList.get(index), "game");
             game.setStatus(iterateBoxscore(g,"status").toString());
+            if(game.getStatus().equals("inprogress")) {
+                Object outcome = iterateBoxscore(g, "outcome");
+                ((BaseballGame) game).setInning(iterateBoxscore(outcome, "current_inning").toString());
+                ((BaseballGame) game).setInningHalf(iterateBoxscore(outcome, "current_inning_half").toString());
+            }
             Object homeObj = iterateBoxscore(g,"home");
             Object awayObj = iterateBoxscore(g,"away");
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.mmsa.controller.BoxscoreController;
 import com.mmsa.controller.URLMapper;
+import com.mmsa.model.BaseballGame;
 import com.mmsa.model.BaseballTeam;
 import com.mmsa.model.Game;
 
@@ -83,7 +84,12 @@ public class BoxActivity extends AppCompatActivity {
 
                 TextView txtSep=new TextView(this);
                 txtSep.setLayoutParams(params1);
-                txtSep.setText(game.getStatus());
+                if(game.getStatus().equals("inprogress")) {
+                    txtSep.setText(game.getStatus() + " " + ((BaseballGame) game).getInningHalf() + ((BaseballGame) game).getInning());
+                }
+                else{
+                    txtSep.setText(game.getStatus());
+                }
                 seperator.addView(txtSep);
 
                 //====================================================================================
