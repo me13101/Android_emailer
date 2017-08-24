@@ -51,6 +51,8 @@ public class Controller {
 
             Object g = iterateBoxscore(gameList.get(index), "game");
             game.setStatus(iterateBoxscore(g,"status").toString());
+            game.setGameID(iterateBoxscore(g,"id").toString());
+
             if(game.getStatus().equals("inprogress")) {
                 Object outcome = iterateBoxscore(g, "outcome");
                 ((BaseballGame) game).setInning(iterateBoxscore(outcome, "current_inning").toString());

@@ -30,6 +30,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".GameActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <uses-permission android:name="android.permission.INTERNET"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <uses-permission android:name="android.permission.INTERNET"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>

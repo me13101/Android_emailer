@@ -6,14 +6,21 @@
     android:layout_height="match_parent"
     tools:context="mmsa.com.sports_emailer.BoxActivity">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        tools:layout_editor_absoluteX="91dp"
+        tools:layout_editor_absoluteY="162dp">
+
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_weight="1"
             android:scrollbars="none"
-            android:layout_weight="1">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/news">
+
             <TableLayout
                 android:id="@+id/gameTable"
                 android:layout_width="fill_parent"
@@ -22,5 +29,35 @@
 
             </TableLayout>
         </ScrollView>
-    </FrameLayout>
+
+        <Button
+            android:id="@+id/news"
+            android:layout_width="133dp"
+            android:layout_height="wrap_content"
+            android:text="News"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/scores"
+            android:layout_toEndOf="@+id/scores" />
+
+        <Button
+            android:id="@+id/scores"
+            android:layout_width="133dp"
+            android:layout_height="wrap_content"
+            android:text="Scores"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/sports" />
+
+        <Button
+            android:id="@+id/sports"
+            android:layout_width="133dp"
+            android:layout_height="wrap_content"
+            android:text="Sports"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

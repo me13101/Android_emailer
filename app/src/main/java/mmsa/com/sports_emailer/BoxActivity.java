@@ -1,8 +1,12 @@
 package mmsa.com.sports_emailer;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -50,7 +54,7 @@ public class BoxActivity extends AppCompatActivity {
 
 
             for(int i = 0; i < ((List<JSONObject>)daysGames).size(); i++){
-                Game game = Controller.populateGameFromList((List<JSONObject>)daysGames, i);
+                final Game game = Controller.populateGameFromList((List<JSONObject>)daysGames, i);
 
                 TableRow descriptor = new TableRow(this);
                 TableRow awayRow = new TableRow(this);
@@ -61,91 +65,63 @@ public class BoxActivity extends AppCompatActivity {
                 awayRow.setBackgroundColor(Color.parseColor("#E8EAF6"));
                 seperator.setBackgroundColor(Color.parseColor("#CFD8DC"));
 
-                TextView descName=new TextView(this);
-                descName.setLayoutParams(params1);
-                descName.setText("Name");
+                descriptor.addView(createTableTextView("Name",params1));
+                descriptor.addView(createTableTextView("Runs",params1));
+                descriptor.addView(createTableTextView("Hits",params1));
+                descriptor.addView(createTableTextView("Errors",params1));
 
-                TextView descRuns=new TextView(this);
-                descRuns.setLayoutParams(params1);
-                descRuns.setText("Runs");
-
-                TextView descHits=new TextView(this);
-                descHits.setLayoutParams(params1);
-                descHits.setText("Hits");
-
-                TextView descErrors=new TextView(this);
-                descErrors.setLayoutParams(params1);
-                descErrors.setText("Errors");
-
-                descriptor.addView(descName);
-                descriptor.addView(descRuns);
-                descriptor.addView(descHits);
-                descriptor.addView(descErrors);
-
-                TextView txtSep=new TextView(this);
-                txtSep.setLayoutParams(params1);
                 if(game.getStatus().equals("inprogress")) {
-                    txtSep.setText(game.getStatus() + " " + ((BaseballGame) game).getInningHalf() + ((BaseballGame) game).getInning());
+                    seperator.addView(createTableTextView(game.getStatus() + " " + ((BaseballGame) game).getInningHalf() + ((BaseballGame) game).getInning(),params1));
                 }
                 else{
-                    txtSep.setText(game.getStatus());
+                    seperator.addView(createTableTextView(game.getStatus(),params1));
                 }
-                seperator.addView(txtSep);
-
                 //====================================================================================
 
-                TextView awayNameCell=new TextView(this);
-                awayNameCell.setLayoutParams(params1);
-                awayNameCell.setText(game.getAway().getMarket()+" "+game.getAway().getName()+" ("+game.getAway().getWins()+"-"+game.getAway().getLosses()+") ");
-                awayRow.addView(awayNameCell);
-
-                TextView awayScoreCell=new TextView(this);
-                awayScoreCell.setLayoutParams(params1);
-                awayScoreCell.setText(((BaseballTeam)game.getAway()).getRuns());
-                awayRow.addView(awayScoreCell);
-
-                TextView awayHitsCell=new TextView(this);
-                awayHitsCell.setLayoutParams(params1);
-                awayHitsCell.setText(((BaseballTeam)game.getAway()).getHits());
-                awayRow.addView(awayHitsCell);
-
-                TextView awayErrorsCell=new TextView(this);
-                awayErrorsCell.setLayoutParams(params1);
-                awayErrorsCell.setText(((BaseballTeam)game.getHome()).getErrors());
-                awayRow.addView(awayErrorsCell);
+                awayRow.addView(createTableTextView((game.getAway().getMarket()+" "+game.getAway().getName()+" ("+game.getAway().getWins()+"-"+game.getAway().getLosses()+") "), params1));
+                awayRow.addView(createTableTextView(((BaseballTeam)game.getAway()).getRuns(), params1));
+                awayRow.addView(createTableTextView(((BaseballTeam)game.getAway()).getHits(), params1));
+                awayRow.addView(createTableTextView(((BaseballTeam)game.getAway()).getErrors(), params1));
 
                 //====================================================================================
-
-                TextView homeNameCell=new TextView(this);
-                homeNameCell.setLayoutParams(params1);
-                homeNameCell.setText(game.getHome().getMarket()+" "+game.getHome().getName()+" ("+game.getHome().getWins()+"-"+game.getHome().getLosses()+") ");
-                homeRow.addView(homeNameCell);
-
-                TextView homeScoreCell=new TextView(this);
-                homeScoreCell.setLayoutParams(params1);
-                homeScoreCell.setText(((BaseballTeam)game.getHome()).getRuns());
-                homeRow.addView(homeScoreCell);
-
-                TextView homeHitsCell=new TextView(this);
-                homeHitsCell.setLayoutParams(params1);
-                homeHitsCell.setText(((BaseballTeam)game.getHome()).getHits());
-                homeRow.addView(homeHitsCell);
-
-                TextView homeErrorsCell=new TextView(this);
-                homeErrorsCell.setLayoutParams(params1);
-                homeErrorsCell.setText(((BaseballTeam)game.getHome()).getErrors());
-                homeRow.addView(homeErrorsCell);
+                homeRow.addView(createTableTextView((game.getHome().getMarket()+" "+game.getHome().getName()+" ("+game.getHome().getWins()+"-"+game.getHome().getLosses()+") "), params1));
+                homeRow.addView(createTableTextView(((BaseballTeam)game.getHome()).getRuns(), params1));
+                homeRow.addView(createTableTextView(((BaseballTeam)game.getHome()).getHits(), params1));
+                homeRow.addView(createTableTextView(((BaseballTeam)game.getHome()).getErrors(), params1));
 
                 //====================================================================================
                 tbl.addView(descriptor);
                 tbl.addView(awayRow);
                 tbl.addView(homeRow);
                 tbl.addView(seperator);
+
+                homeRow.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Intent viewGame = new Intent(getApplicationContext(), GameActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("gameID", game.getGameID());
+                        viewGame.putExtras(b);
+                        try {
+                            startActivity(viewGame);
+                        }catch (Exception e){
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
             }
         }catch(Exception e){
             throw new RuntimeException(e);
         }
 
+    }
+
+    TextView createTableTextView(String text, TableRow.LayoutParams params){
+        TextView cell=new TextView(this);
+        cell.setLayoutParams(params);
+        cell.setText(text);
+        return cell;
     }
 }
 
